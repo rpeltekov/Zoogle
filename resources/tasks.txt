@@ -1,0 +1,20 @@
+Phase: Proof Concept
+--------
+setup google assistant sdk 
+learn to route audio with pulse
+zoom should be online or application?
+learn how to make application to interact with zoom
+how are we gonna connect client side of application with bot side
+should the application be a webapp or an actual app? idk
+
+Phase: actual building
+--------
+setup bot (sdk, audioroute, etc.)
+writing app
+- client side
+	- react -> make pretty
+	- api to send data to bot side idk
+- bot side
+	- api to get data from client side
+	- needs zoom interaction
+- host the application or any services that we need?
