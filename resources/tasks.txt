@@ -2,10 +2,11 @@ Phase: Proof Concept
 --------
 setup google assistant sdk 
 learn to route audio with pulse
-zoom should be online or application?
+zoom client
 learn how to make application to interact with zoom
 how are we gonna connect client side of application with bot side
 should the application be a webapp or an actual app? idk
+
 
 Phase: actual building
 --------
