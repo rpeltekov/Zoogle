@@ -11,6 +11,9 @@ class App extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSettingMute = this.handleSettingMute.bind(this);
+    this.handleSettingLeave = this.handleSettingLeave.bind(this);
+
   }
 
   handleChange(e) {
@@ -31,6 +34,23 @@ class App extends Component {
       currentURL: "",
       username: ""
     });
+  }
+  handleSettingMute(e) {
+    e.preventDefault();
+    const settingsRef = firebase.database().ref("settings");
+    const commands = {
+      command: "mute"
+    };
+    settingsRef.push(commands);
+  }
+
+  handleSettingLeave(e) {
+    e.preventDefault();
+    const settingsRef = firebase.database().ref("settings");
+    const commands = {
+      command: "leave"
+    };
+    settingsRef.push(commands);
   }
 
   render() {
@@ -62,6 +82,12 @@ class App extends Component {
             </form>
           </section>
           <section className="display-item">
+          <button onClick={this.handleSettingMute}>
+            Mute/Unmute
+          </button>
+          <button onClick={this.handleSettingLeave}>
+            Leave Meeting
+          </button>
             <div className="wrapper">
               <ul></ul>
             </div>
