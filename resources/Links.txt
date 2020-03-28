@@ -1,0 +1,14 @@
+//virtual machine directions
+https://medium.com/dfclub/create-a-virtual-machine-on-virtualbox-47e7ce10b21
+
+//virtual box download
+https://www.virtualbox.org/wiki/Downloads
+
+//google assistant sdk
+https://developers.google.com/assistant/sdk/guides/service/python
+
+//pulse audio manager page for learning idk
+https://opensource.com/article/17/1/linux-plays-sound
+
+//web audio api
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
