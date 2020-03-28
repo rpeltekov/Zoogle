@@ -6,11 +6,33 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentSetup: []
+      currentInit: [],
+      settings: []
     };
   }
 
   componentDidMount() {
+    this.receiveInit();
+    this.receiveSettings();
+  }
+
+  receiveSettings() {
+    const usernameRef = firebase.database().ref("settings");
+    usernameRef.on("value", snapshot => {
+      let commands = snapshot.val();
+      let tempState = [];
+      for (let word in commands) {
+        tempState.push({
+          command: commands[word].command
+        });
+      }
+      this.setState({
+        settings: tempState
+      });
+    });
+  }
+
+  receiveInit() {
     const usernameRef = firebase.database().ref("items");
     usernameRef.on("value", snapshot => {
       let items = snapshot.val();
@@ -21,13 +43,9 @@ class App extends Component {
           user: items[word].user
         });
       }
-      console.log("componentDidMount");
-      console.log(tempState);
       this.setState({
-        currentSetup: tempState
+        currentInit: tempState
       });
-      console.log("this.currentSetup");
-      console.log(this.currentSetup);
     });
   }
 
@@ -41,15 +59,29 @@ class App extends Component {
         </header>
         <div className="container">
           <section className="add-item">
-            {console.log("testing")}
-            {console.log(this.state.currentSetup)}
+            {console.log("currentInit")}
+            {console.log(this.state.currentInit)}
             <div>
               <h1>Most Recent Setup Last</h1>
-              {this.state.currentSetup.map(elem => {
+              {this.state.currentInit.map(elem => {
                 return (
                   <div>
                     <h3>user {elem.user} initiated: </h3>
                     <h4>{elem.url}</h4>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+          <section className="add-item">
+            {console.log("settings")}
+            {console.log(this.state.settings)}
+            <div>
+              <h1>Most recent setting last</h1>
+              {this.state.settings.map(elem => {
+                return (
+                  <div>
+                    <h3>execute: {elem.command}</h3>
                   </div>
                 );
               })}
