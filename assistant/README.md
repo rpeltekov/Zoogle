@@ -15,7 +15,7 @@
 #### pacmd set-default-sink second
 #### pacmd set-default-source third.monitor
 ## 4. Start script:
-#### python pushtotalk.py --project-id \<my-dev-project\> --device-model-id \<my-model\>
+#### python assistant.py --project-id \<my-dev-project\> --device-model-id \<my-model\>
 ## 5. Start zoom
 ## 6. Route audio
 ### run pavucontrol to route audio
