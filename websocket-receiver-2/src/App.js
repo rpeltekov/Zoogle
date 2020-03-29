@@ -32,19 +32,27 @@ export default class App extends Component {
       let tempState = [];
       for (let word in commands) {
         if (commands[word].command === "mute") {
-          this.setState({ isMuted: true });
+          ZoomMtg.mute({
+            mute: true
+          });
           console.log("isMute: " + this.state.isMuted);
         } else if (commands[word].command === "unmute") {
-          this.setState({ isMuted: false });
+          ZoomMtg.mute({
+            mute: false
+          });
           console.log("isMute: " + this.state.isMuted);
-        } else if (commands[word].command === "leave") {
-          ZoomMtg.leaveMeeting({});
         }
         tempState.push({ command: commands[word].command });
       }
       this.setState({
         settings: tempState
       });
+      var len = this.state.settings.length - 1;
+      var shouldLeave = this.state.settings[len].command;
+      console.log("shouldLeave: " + shouldLeave);
+      if (shouldLeave === "leave") {
+        ZoomMtg.leaveMeeting({});
+      }
     });
   }
 
@@ -94,7 +102,7 @@ export default class App extends Component {
         userName: name,
         userEmail: "rpeltekov@gmail.com",
         passWord: "",
-        leaveUrl: "https://zoom.us",
+        leaveUrl: "localhost:3000",
         role: 0
       };
       ZoomMtg.generateSignature({
@@ -104,7 +112,7 @@ export default class App extends Component {
         role: meetConfig.role,
         success(res) {
           ZoomMtg.init({
-            leaveUrl: "http://www.zoom.us",
+            leaveUrl: meetConfig.leaveUrl,
             success() {
               ZoomMtg.join({
                 meetingNumber: meetConfig.meetingNumber,
