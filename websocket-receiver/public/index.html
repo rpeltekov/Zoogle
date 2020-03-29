@@ -11,16 +11,6 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://source.zoom.us/1.7.0/css/bootstrap.css"
-    />
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://source.zoom.us/1.7.0/css/react-select.css"
-    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -43,11 +33,13 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <!-- import local css for #zmmtg-root -->
+    <link type="text/css" rel="stylesheet" href="node_modules/@zoomus/websdk/dist/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="node_modules/@zoomus/websdk/dist/css/react-select.css" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script src="https://source.zoom.us/1.7.0/lib/vendor/jquery.min.js"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -58,5 +50,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://source.zoom.us/1.7.0/lib/vendor/jquery.min.js"></script>
   </body>
 </html>

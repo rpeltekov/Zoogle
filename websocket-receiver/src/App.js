@@ -1,20 +1,26 @@
 import React, { Component } from "react";
 import "./App.css";
-import firebase from "./firebase.js";
-import Info from "./Info";
-//import Zoom from "./Zoom";
+import Zoom from "./Zoom.js";
+import Setting from "./setting.js";
+import firebase from "./firebase";
+import { ZoomMtg } from "@zoomus/websdk";
 
-class App extends Component {
+const API_KEY = "n1TaQgWDRfKlseHZEakN8w";
+const API_SECRET = "DLnpEoxBB1dAJVXrbEJaWKjoCSEjwTYiJoSr";
+
+export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentInit: [],
-      settings: [],
-      isMuted: false
+      joined: false,
+      first: true
     };
   }
 
   componentDidMount() {
+    ZoomMtg.setZoomJSLib("https://source.zoom.us/1.7.0/lib", "/av");
+    ZoomMtg.preLoadWasm();
+    ZoomMtg.prepareJssdk();
     this.receiveInit();
     this.receiveSettings();
   }
@@ -25,16 +31,28 @@ class App extends Component {
       let commands = snapshot.val();
       let tempState = [];
       for (let word in commands) {
-        if (commands[word].command == "mute") {
-          this.setState({ isMuted: true });
-        } else if (commands[word].command == "unmute") {
-          this.setState({ isMuted: false });
+        if (commands[word].command === "mute") {
+          ZoomMtg.mute({
+            mute: true
+          });
+          console.log("isMute: " + this.state.isMuted);
+        } else if (commands[word].command === "unmute") {
+          ZoomMtg.mute({
+            mute: false
+          });
+          console.log("isMute: " + this.state.isMuted);
         }
         tempState.push({ command: commands[word].command });
       }
       this.setState({
         settings: tempState
       });
+      var len = this.state.settings.length - 1;
+      var shouldLeave = this.state.settings[len].command;
+      console.log("shouldLeave: " + shouldLeave);
+      if (shouldLeave === "leave") {
+        ZoomMtg.leaveMeeting({});
+      }
     });
   }
 
@@ -49,14 +67,97 @@ class App extends Component {
           user: items[word].user
         });
       }
+
+      let len = tempState.length - 1;
+      console.log(this.state.currentInit);
+
+      if (len >= 0 && !this.state.first) {
+        let turl = tempState[len].url;
+        let user = tempState[len].user;
+        console.log(len, turl, user);
+        if (!this.state.joined) {
+          this.launchMeeting(turl, user);
+          this.setState({
+            joined: true
+          });
+        } else {
+          console.log("join new meeting");
+          //somehow exit and launch new
+        }
+      }
       this.setState({
-        currentInit: tempState
+        first: false
       });
     });
   }
 
+  launchMeeting = (url, name) => {
+    console.log(url, name, "launch meeting");
+    if (url != "" && name != "") {
+      console.log(url, name, "passed empty if statement");
+      const meetConfig = {
+        apiKey: API_KEY,
+        apiSecret: API_SECRET,
+        meetingNumber: parseInt(url, 10),
+        userName: name,
+        userEmail: "rpeltekov@gmail.com",
+        passWord: "",
+        leaveUrl: "localhost:3000",
+        role: 0
+      };
+      ZoomMtg.generateSignature({
+        meetingNumber: meetConfig.meetingNumber,
+        apiKey: meetConfig.apiKey,
+        apiSecret: meetConfig.apiSecret,
+        role: meetConfig.role,
+        success(res) {
+          ZoomMtg.init({
+            leaveUrl: meetConfig.leaveUrl,
+            success() {
+              ZoomMtg.join({
+                meetingNumber: meetConfig.meetingNumber,
+                userName: meetConfig.userName,
+                signature: res.result,
+                apiKey: meetConfig.apiKey,
+                userEmail: "email@gmail.com",
+                passWord: meetConfig.passWord,
+                success() {
+                  console.log("joined");
+                  setTimeout(function() {
+                    console.log("joining audio");
+                    var startButton = document.getElementById("pc-join");
+                    console.log(startButton);
+                    if (startButton) {
+                      startButton.click();
+                    }
+                  }, 6000);
+                },
+                error(res) {
+                  console.log(res, "1");
+                }
+              });
+            },
+            error(res) {
+              console.log(res, "2");
+            }
+          });
+        }
+      });
+    }
+  };
+
+  joinAudio = () => {
+    console.log("joining audio");
+    var startButton = document.getElementById("pc-join");
+    console.log(startButton);
+    if (startButton) {
+      startButton.click();
+      clearInterval(this.state.timerId);
+    }
+  };
+
   render() {
-    return <Info />;
+    console.log("bleh2");
+    return <div className="component-app"></div>;
   }
 }
-export default App;
