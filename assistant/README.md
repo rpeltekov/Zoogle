@@ -17,4 +17,4 @@
 #### pacmd set-default-source third.monitor
 ### run pavucontrol to route audio
 ## 4. Start script:
-### python pushtotalk.py --project-id <my-dev-project> --device-model-id <my-model>
+#### python pushtotalk.py --project-id (my-dev-project) --device-model-id (my-model)
