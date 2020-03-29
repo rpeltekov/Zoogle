@@ -76,14 +76,14 @@ class App extends Component {
               <input
                 type="text"
                 name="username"
-                placeholder="What's your Zoom username?"
+                placeholder="What's your bots name?"
                 onChange={this.handleChange}
                 value={this.state.username}
               />
               <input
                 type="text"
                 name="currentURL"
-                placeholder="What is the Zoom meeting URL?"
+                placeholder="What's Zoom meeting number?"
                 onChange={this.handleChange}
                 value={this.state.currentURL}
               />
