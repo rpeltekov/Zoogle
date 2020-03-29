@@ -12,6 +12,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSettingMute = this.handleSettingMute.bind(this);
+    this.handleSettingUnmute = this.handleSettingUnmute.bind(this);
     this.handleSettingLeave = this.handleSettingLeave.bind(this);
 
   }
@@ -40,6 +41,14 @@ class App extends Component {
     const settingsRef = firebase.database().ref("settings");
     const commands = {
       command: "mute"
+    };
+    settingsRef.push(commands);
+  }
+  handleSettingUnmute(e) {
+    e.preventDefault();
+    const settingsRef = firebase.database().ref("settings");
+    const commands = {
+      command: "unmute"
     };
     settingsRef.push(commands);
   }
@@ -82,12 +91,15 @@ class App extends Component {
             </form>
           </section>
           <section className="display-item">
-          <button onClick={this.handleSettingMute}>
-            Mute/Unmute
-          </button>
-          <button onClick={this.handleSettingLeave}>
-            Leave Meeting
-          </button>
+            <button onClick={this.handleSettingMute}>
+                Mute
+              </button>
+              <button onClick={this.handleSettingUnmute}>
+                Unmute
+              </button>
+              <button onClick={this.handleSettingLeave}>
+                Leave Meeting
+              </button>
             <div className="wrapper">
               <ul></ul>
             </div>
