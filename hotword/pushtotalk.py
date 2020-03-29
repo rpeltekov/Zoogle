@@ -336,8 +336,8 @@ def main(api_endpoint, credentials, project_id,
     # Porcupine setup
     library_path = "lib/linux/x86_64/libpv_porcupine.so" # Path to Porcupine's C library available under lib/${SYSTEM}/${MACHINE}/
     model_file_path = "lib/common/porcupine_params.pv" # It is available at lib/common/porcupine_params.pv
-    keyword_file_paths = ['picovoice_linux.ppn', 'hey_google_linux_2020-04-28_v1.7.0.ppn']
-    sensitivities = [0.8, 0.8]
+    keyword_file_paths = ['hey_google_linux_2020-04-28_v1.7.0.ppn']
+    sensitivities = [0.3]
     porcupine = None
     pa = None
     audio_stream = None
