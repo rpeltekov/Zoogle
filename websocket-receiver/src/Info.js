@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import "./App.css";
 import firebase from "./firebase.js";
 
-class Info extends Component {
+export default class Info extends Component {
   constructor() {
     super();
     this.state = {
       currentInit: [],
       settings: [],
-      isMuted: false
+      isMuted: false,
+      currentSetting: "",
+      currentUser: "",
+      currentURL: ""
     };
   }
 
@@ -25,10 +28,8 @@ class Info extends Component {
       for (let word in commands) {
         if (commands[word].command == "mute") {
           this.setState({ isMuted: true });
-          console.log("isMute: " + this.state.isMuted);
         } else if (commands[word].command == "unmute") {
           this.setState({ isMuted: false });
-          console.log("isMute: " + this.state.isMuted);
         }
         tempState.push({ command: commands[word].command });
       }
@@ -52,6 +53,13 @@ class Info extends Component {
       this.setState({
         currentInit: tempState
       });
+      var len = this.state.currentInit.length - 1;
+      var url = this.state.currentInit[len].url;
+      var user = this.state.currentInit[len].user;
+      this.setState({
+        currentURL: url,
+        currentUser: user
+      });
     });
   }
 
@@ -67,14 +75,10 @@ class Info extends Component {
           <section className="add-item">
             <div>
               <h1>Most Recent Setup Last</h1>
-              {this.state.currentInit.map(elem => {
-                return (
-                  <div>
-                    <h3>user {elem.user} initiated: </h3>
-                    <h4>{elem.url}</h4>
-                  </div>
-                );
-              })}
+              <h3>
+                User {this.state.currentUser} connected to:{" "}
+                {this.state.currentURL}
+              </h3>
             </div>
           </section>
           <section className="add-item">
@@ -85,7 +89,6 @@ class Info extends Component {
               {this.state.settings.map(elem => {
                 return (
                   <div>
-                    {console.log("in render isMusted: " + this.state.isMuted)}
                     <h3>execute: {elem.command}</h3>
                     <h5>Mute setting: </h5>
                     <h5>{this.state.isMuted ? "muted" : "unmuted"}</h5>
@@ -99,4 +102,3 @@ class Info extends Component {
     );
   }
 }
-export default Info;

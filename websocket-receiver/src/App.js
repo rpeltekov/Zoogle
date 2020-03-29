@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import firebase from "./firebase.js";
 import Info from "./Info";
-import Zoom from "./Zoom";
+//import Zoom from "./Zoom";
 
 class App extends Component {
   constructor() {
@@ -27,10 +27,8 @@ class App extends Component {
       for (let word in commands) {
         if (commands[word].command == "mute") {
           this.setState({ isMuted: true });
-          console.log("isMute: " + this.state.isMuted);
         } else if (commands[word].command == "unmute") {
           this.setState({ isMuted: false });
-          console.log("isMute: " + this.state.isMuted);
         }
         tempState.push({ command: commands[word].command });
       }
@@ -58,7 +56,7 @@ class App extends Component {
   }
 
   render() {
-    return <Zoom />;
+    return <Info />;
   }
 }
 export default App;

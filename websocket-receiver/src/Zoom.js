@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import { ZoomMtg } from "@zoomus/websdk";
+import Info from "./Info";
 
 // Add this, never use it client side in production
 const API_KEY = "n1TaQgWDRfKlseHZEakN8w";
