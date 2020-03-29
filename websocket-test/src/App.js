@@ -14,7 +14,6 @@ class App extends Component {
     this.handleSettingMute = this.handleSettingMute.bind(this);
     this.handleSettingUnmute = this.handleSettingUnmute.bind(this);
     this.handleSettingLeave = this.handleSettingLeave.bind(this);
-
   }
 
   handleChange(e) {
@@ -76,33 +75,33 @@ class App extends Component {
               <input
                 type="text"
                 name="username"
-                placeholder="What's your bots name?"
+                placeholder="Bot Name"
                 onChange={this.handleChange}
                 value={this.state.username}
               />
               <input
                 type="text"
                 name="currentURL"
-                placeholder="What's Zoom meeting number?"
+                placeholder="Zoom Meeting Number"
                 onChange={this.handleChange}
                 value={this.state.currentURL}
               />
               <button>Start Zoogle Assistant</button>
             </form>
           </section>
-          <section className="display-item">
-            <button onClick={this.handleSettingMute}>
-                Mute
-              </button>
-              <button onClick={this.handleSettingUnmute}>
-                Unmute
-              </button>
-              <button onClick={this.handleSettingLeave}>
-                Leave Meeting
-              </button>
-            <div className="wrapper">
-              <ul></ul>
-            </div>
+          <section className="add-item">
+            <h2>Send Commands to the Bot</h2>
+            <ul>
+              <li>
+                <button onClick={this.handleSettingMute}>Mute</button>
+              </li>
+              <li>
+                <button onClick={this.handleSettingUnmute}>Unmute</button>
+              </li>
+              <li>
+                <button onClick={this.handleSettingLeave}>Leave Meeting</button>
+              </li>
+            </ul>
           </section>
         </div>
       </div>
