@@ -335,8 +335,8 @@ def main(api_endpoint, credentials, project_id,
     # Porcupine setup
     library_path = "lib/linux/x86_64/libpv_porcupine.so" # Path to Porcupine's C library available under lib/${SYSTEM}/${MACHINE}/
     model_file_path = "lib/common/porcupine_params.pv" # It is available at lib/common/porcupine_params.pv
-    keyword_file_paths = ['hey_google_linux_2020-04-28_v1.7.0.ppn']
-    sensitivities = [0.3]
+    keyword_file_paths = ['ok_google_linux_2020-04-28_v1.7.0.ppn', 'hey_google_linux_2020-04-28_v1.7.0.ppn']
+    sensitivities = [0.8, 0.8]
     porcupine = None
     pa = None
     audio_stream = None
@@ -494,7 +494,7 @@ def main(api_endpoint, credentials, project_id,
                 pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
                 #print('test')
                 result = porcupine.process(pcm)
-                if result:
+                if result >= 0:
                     print('detected keyword')
                     continue_conversation = assistant.assist()
                     wait_for_user_trigger = not continue_conversation
