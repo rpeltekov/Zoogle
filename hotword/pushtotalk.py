@@ -30,7 +30,6 @@ import google.auth.transport.grpc
 import google.auth.transport.requests
 import google.oauth2.credentials
 
-from halo import Halo
 import argparse
 import struct
 from datetime import datetime
