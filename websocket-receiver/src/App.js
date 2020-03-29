@@ -7,7 +7,8 @@ class App extends Component {
     super();
     this.state = {
       currentInit: [],
-      settings: []
+      settings: [],
+      isMuted: false
     };
   }
 
@@ -22,9 +23,14 @@ class App extends Component {
       let commands = snapshot.val();
       let tempState = [];
       for (let word in commands) {
-        tempState.push({
-          command: commands[word].command
-        });
+        if (commands[word].command == "mute") {
+          this.setState({ isMuted: true });
+          console.log("isMute: " + this.state.isMuted);
+        } else if (commands[word].command == "unmute") {
+          this.setState({ isMuted: false });
+          console.log("isMute: " + this.state.isMuted);
+        }
+        tempState.push({ command: commands[word].command });
       }
       this.setState({
         settings: tempState
@@ -59,8 +65,6 @@ class App extends Component {
         </header>
         <div className="container">
           <section className="add-item">
-            {console.log("currentInit")}
-            {console.log(this.state.currentInit)}
             <div>
               <h1>Most Recent Setup Last</h1>
               {this.state.currentInit.map(elem => {
@@ -81,7 +85,10 @@ class App extends Component {
               {this.state.settings.map(elem => {
                 return (
                   <div>
+                    {console.log("in render isMusted: " + this.state.isMuted)}
                     <h3>execute: {elem.command}</h3>
+                    <h5>Mute setting: </h5>
+                    <h5>{this.state.isMuted ? "muted" : "unmuted"}</h5>
                   </div>
                 );
               })}
